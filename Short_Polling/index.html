@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Short Polling</title>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Testing short polling</h1>
+    <label>Insert the value</label>
+    <input type="text" name="getValue" id="getValue" />
+    <p>This is the current status: <span id="status">Starting ...</span></p>
+    <h3>Click the button below to start</h3>
+    <h1 id="completed"></h1>
+    <button onclick="fetchVal()">Poll</button>
+  </body>
+</html>
