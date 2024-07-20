@@ -1,0 +1,14 @@
+{
+  "name": "basic_web_sockets",
+  "version": "1.0.0",
+  "description": "create basic web socket server and client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
