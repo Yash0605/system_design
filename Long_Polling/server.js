@@ -12,10 +12,14 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 let vals = [];
+let setIntevalVar = null;
+let final = null;
+let requiredVal;
 
-const populateVals = function (requiredVal) {
+const populateVals = function () {
   if (vals.length == 0 || !vals.includes(parseInt(requiredVal))) {
-    setInterval(() => {
+    let popInterval = setInterval(() => {
+      console.log(`Here: ${vals}`);
       const len = vals.length;
       if (len == 0) {
         vals.push(5);
@@ -23,25 +27,35 @@ const populateVals = function (requiredVal) {
         // get the length and append new val accordingly
         if (!vals.includes(parseInt(requiredVal))) {
           vals.push(5 * (len + 1));
+        } else {
+          clearInterval(popInterval);
         }
       }
     }, 5000);
   }
 };
 
+let getVals = () => {
+  if (vals.includes(parseInt(requiredVal))) {
+    final = { data: "Value Found", status: "Completed" };
+    clearInterval(setIntevalVar);
+  }
+};
+
 // Endpoint to get messages (polled by the client)
 app.post("/poll", (req, res) => {
-  const requiredVal = req.body.value;
-  populateVals(requiredVal);
-  if (vals.length != 0) {
-    if (vals.includes(parseInt(requiredVal))) {
+  requiredVal = req.body.value;
+  populateVals();
+
+  setIntevalVar = setInterval(() => {
+    if (
+      vals.includes(parseInt(requiredVal)) ||
+      vals[vals.length - 1] > parseInt(requiredVal)
+    ) {
       res.json({ data: "Value Found", status: "Completed" });
-    } else {
-      res.json({ data: vals[vals.length - 1], status: "In Progress" });
+      clearInterval(setIntevalVar);
     }
-  } else {
-    res.json({ data: -1, status: "Waiting" });
-  }
+  }, 6000);
 });
 
 app.listen(port, () => {

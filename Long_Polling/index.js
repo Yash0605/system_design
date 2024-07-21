@@ -17,15 +17,9 @@ const fetchVal = async function () {
     .then((val) => {
       console.log("Success:", val); // Handle the response data
       progressVal.textContent = val.status != "Waiting" ? val.data : val.status;
-      if (val.data === -1 || val.data < parseInt(inputValue.value)) {
+      if (val.data == parseInt(inputValue.value)) {
         isComplete.innerText = val.status;
-        setTimeout(() => {
-          fetchVal();
-        }, 3000);
-      } else if (val.data > parseInt(inputValue.value)) {
-        isComplete.innerText = val.status;
-      } else {
-        isComplete.innerText = val.status;
+        fetchVal();
       }
     })
     .catch((error) => {
